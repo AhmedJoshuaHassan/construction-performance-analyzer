@@ -1,11 +1,17 @@
 print("="*45)
 print("CONSTRUCTION PROJECT PERFORMANCE REPORT")
 print("="*45)
-#filename = "project_data.txt"
-file = input("Enter file name: ")
-file_op = open(file)
-project = {}
 
+#filename = "project_data.txt"
+
+file = input("Enter file name: ")
+try:   
+    file_op = open(file)
+except:
+    print("Wrongfilename: Enter Correct file name")
+    exit()
+    
+project = {}
 
 for line in file_op:
     line = line.rstrip()
