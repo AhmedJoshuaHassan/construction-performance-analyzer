@@ -1,5 +1,8 @@
-#file = input("Enter file name: ")
-file = "project_data.txt"
+print("="*45)
+print("CONSTRUCTION PROJECT PERFORMANCE REPORT")
+print("="*45)
+#filename = "project_data.txt"
+file = input("Enter file name: ")
 file_op = open(file)
 project = {}
 
@@ -19,23 +22,44 @@ for line in file_op:
     
     project[number] = {"name":name, "PV":PV, "EV":EV, "AC":AC, "CV":CV, "SV":SV, "CPI":CPI, "SPI":SPI}
     
-    #activity schedule Status
-    if project[number]["SPI"]>1:
+    #Activity schedule Status
+    if project[number]["SPI"]>1.0:
         activity_sstatus = "AHEAD OF SCHEDULE"
-    elif project[number]["SPI"]==1:
+    elif project[number]["SPI"]==1.0:
         activity_sstatus = "ON SCHEDULE"
-    else:
+    elif project[number]["SPI"]<1.0:
         activity_sstatus = "BEHIND SCHEDULE"
 
-    #Overall Budget Status
-    if project[number]["CPI"]>1:
-        activity_cstatus = "OVER-BUDGET"
-    elif project[number]["CPI"]>1:
+    #Activity Budget Status
+    if project[number]["CPI"]>1.0:
+        activity_cstatus = "UNDER-BUDGET"
+    elif project[number]["CPI"]==1.0:
         activity_cstatus = "ON-BUDGET"
-    else:
-        project_cstatus = "UNDER-BUDGET"
+    elif project[number]["CPI"]<1.0:
+        activity_cstatus = "OVER-BUDGET"
         
     project[number] = {"name":name, "PV":PV, "EV":EV, "AC":AC, "CV":CV, "SV":SV, "CPI":CPI, "SPI":SPI,"Schedule Status": activity_sstatus, "Cost Status": activity_cstatus}
+
+total_activities = 0         #Total Activities
+ahead_of_schedule = 0  #Number of Activities Ahead of Schedule
+on_schedule = 0     #Number of Activities on Schedule
+behind_schedule = 0    #Number of Activities Behind Schedule
+
+for activity in project:
+    total_activities = total_activities+1
+    if project[activity]["Schedule Status"]=="AHEAD OF SCHEDULE":
+        ahead_of_schedule = ahead_of_schedule + 1
+    elif project[activity]["Schedule Status"]=="ON SCHEDULE":
+        on_schedule = on_schedule+1
+    elif project[activity]["Schedule Status"]=="BEHIND SCHEDULE":
+        behind_schedule = behind_schedule+1
+print("")   #empty line
+print(f"Total Activities: {total_activities}\nActivities Ahead of Schedule: {ahead_of_schedule}\nActivities On Schedule: {on_schedule}\nActivities Behind Schedule: {behind_schedule}")
+print("")   #empty line
+#print(project)
+
+
+#OVERALL PROJECT PERFORMANCE
     
 total_PV = 0
 total_EV = 0
@@ -62,12 +86,12 @@ else:
 
 #Overall Budget Status
 if project_CPI>1:
-    project_cstatus = "OVER-BUDGET"
+    project_cstatus = "UNDER-BUDGET"
 elif project_SPI==1:
     project_cstatus = "ON-BUDGET"
 else:
-    project_cstatus = "UNDER-BUDGET"
+    project_cstatus = "OVER-BUDGET"
     
 print(f"Project Summary\nProject SPI:{project_SPI}\nProject CPI: {project_CPI}\nOverall Schedule Status:{project_sstatus}\nOverall Cost Status:{project_cstatus}")
 
-print(project)
+#print(project)
